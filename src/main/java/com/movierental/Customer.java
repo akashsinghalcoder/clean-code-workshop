@@ -19,22 +19,27 @@ public class Customer {
     return name;
   }
   
+ public int calculateTotalFrequentRenterPoints() {
+	  int frequentRenterPoints = 0;
+	  for (Rental each : rentals) {
+	    	frequentRenterPoints += each.calculateFrequentRenterPoints();
+	  }
+	  return frequentRenterPoints;
+	  
+	 
+ }
   
 
   public String statement() {
-    double totalAmount = 0;
-    int frequentRenterPoints = 0;
     String result = "Rental Record for " + getName() + "\n";
-    for (Rental each : rentals) {
-    	double thisAmount = calculateAmountForEachRental(each);
-    	frequentRenterPoints += each.calculateFrequentRenterPoints();
-      //show figures for this rental
-      result += "\t" + each.getMovie().getTitle() + "\t" +
-          String.valueOf(thisAmount) + "\n";
-      totalAmount += thisAmount;
-    }
-
-    //add footer lines result
+    double totalAmount = 0;
+	for (Rental each : rentals) {
+	    double thisAmount = calculateAmountForEachRental(each);	     
+	    result += "\t" + each.getMovie().getTitle() + "\t" +
+	    String.valueOf(thisAmount) + "\n";
+	    totalAmount += thisAmount;
+	}
+	int frequentRenterPoints = calculateTotalFrequentRenterPoints() ;
     result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
     result += "You earned " + String.valueOf(frequentRenterPoints)
         + " frequent renter points";
